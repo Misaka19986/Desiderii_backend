@@ -15,7 +15,7 @@ import lombok.Setter;
  * </p>
  *
  * @author Misakaless19986
- * @since 2024-01-14 09:14:05
+ * @since 2024-01-15 03:44:04
  */
 @Getter
 @Setter
@@ -59,4 +59,14 @@ public class User implements Serializable {
      * 创建时间
      */
     private LocalDateTime createTime;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 个性签名
+     */
+    private String signature;
 }
