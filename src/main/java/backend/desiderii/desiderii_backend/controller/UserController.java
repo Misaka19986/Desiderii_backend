@@ -1,15 +1,13 @@
 package backend.desiderii.desiderii_backend.controller;
 
-import backend.desiderii.desiderii_backend.DesideriiBackendApplication;
 import backend.desiderii.desiderii_backend.entity.User;
 import backend.desiderii.desiderii_backend.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -17,12 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author Misakaless19986
- * @since 2024-01-15 03:44:04
+ * @since 2024-01-17 11:21:25
  */
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private UserService userService;
     @PostMapping("/login")

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Misakaless19986
- * @since 2024-01-15 03:44:04
+ * @since 2024-01-17 11:21:25
  */
 @Service
 public class ChatGroupServiceImpl extends ServiceImpl<ChatGroupMapper, ChatGroup> implements ChatGroupService {
