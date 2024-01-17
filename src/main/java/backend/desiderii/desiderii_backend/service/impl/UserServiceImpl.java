@@ -24,4 +24,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // TODO: login
         return null;
     }
+
+    @Override
+    public User userRegister(User user){
+        return null;
+    }
 }
