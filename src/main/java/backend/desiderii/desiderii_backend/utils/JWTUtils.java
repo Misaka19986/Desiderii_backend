@@ -8,10 +8,14 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 public class JWTUtils {
+    private static final Logger logger = LoggerFactory.getLogger(JWTUtils.class);
+
     // Signature
     private static final String signature = "desiderii_xJFYtyX+#8";
 
@@ -65,15 +69,15 @@ public class JWTUtils {
             verify = jwtVerifier.verify(token);
             return verify;
         }catch (SignatureVerificationException e){
-            System.out.println("parseAccessToken: Invalid signature\n");
+            logger.warn("parseAccessToken: Invalid signature\n");
         }catch (TokenExpiredException e){
-            System.out.println("parseAccessToken: Token expired\n");
+            logger.warn("parseAccessToken: Token expired\n");
         }catch (AlgorithmMismatchException e){
-            System.out.println("parseAccessToken: Wrong algorithm\n");
+            logger.warn("parseAccessToken: Wrong algorithm\n");
         }catch (Exception e){
-            System.out.println("parseAccessToken: Invalid token\n");
+            logger.warn("parseAccessToken: Invalid token\n");
         }
 
-        return verify;
+        return null;
     }
 }

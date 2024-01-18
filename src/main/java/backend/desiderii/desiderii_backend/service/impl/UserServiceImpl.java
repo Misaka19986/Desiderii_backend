@@ -4,6 +4,7 @@ import backend.desiderii.desiderii_backend.entity.User;
 import backend.desiderii.desiderii_backend.mapper.UserMapper;
 import backend.desiderii.desiderii_backend.service.UserService;
 import backend.desiderii.desiderii_backend.utils.EncryptPasswordUtils;
+import backend.desiderii.desiderii_backend.utils.JWTUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Override
-    public boolean userLogin(User user) {
+    public String[] userLogin(User user) {
         String alias = user.getAlias();
         String password = user.getPassword();
 
@@ -31,10 +32,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // Username is not founded or password mismatch
         if(null == user ||
                 EncryptPasswordUtils.matchesPassword(password, userDB.getPassword())){
-            return false;
+            return null;
         }
 
-        return true;
+        // Gen tokens
+        String[] tokens = null;
+        tokens[0] = JWTUtils.createAccessToken(userDB.getUid());
+        tokens[1] = JWTUtils.createRefreshToken(userDB.getUid());
+
+        return tokens;
     }
 
     @Override
