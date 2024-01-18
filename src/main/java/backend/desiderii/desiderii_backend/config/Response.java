@@ -1,5 +1,4 @@
 package backend.desiderii.desiderii_backend.config;
-
 public class Response<T> {
     public int code;
     public String message;

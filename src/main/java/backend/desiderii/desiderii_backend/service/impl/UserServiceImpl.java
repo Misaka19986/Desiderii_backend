@@ -7,6 +7,9 @@ import backend.desiderii.desiderii_backend.utils.EncryptPasswordUtils;
 import backend.desiderii.desiderii_backend.utils.JWTUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,10 +22,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Resource
     private UserMapper userMapper;
 
     @Override
     public String[] userLogin(User user) {
+        logger.info("登录中");
         String alias = user.getAlias();
         String password = user.getPassword();
 
@@ -30,7 +36,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User userDB = userMapper.selectOne(new QueryWrapper<User>().eq("alias", alias));
 
         // Username is not founded or password mismatch
-        if(null == user ||
+        if(null == userDB ||
                 EncryptPasswordUtils.matchesPassword(password, userDB.getPassword())){
             return null;
         }
@@ -44,7 +50,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public User userRegister(User user){
-        return null;
+    public boolean userRegister(User user){
+        logger.info("注册中");
+        User userDB = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("alias", user.getAlias())
+                .or()
+                .eq("email", user.getEmail()));
+
+        if(null != userDB){
+            logger.warn("用户名或邮箱重复!");
+            return false;
+        }
+
+        User newUser = new User();
+        newUser.setAlias(user.getAlias());
+        newUser.setPhone(user.getPhone());
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(EncryptPasswordUtils.encryptPassword(user.getPassword()));
+
+        userMapper.insert(newUser);
+
+        return true;
     }
 }

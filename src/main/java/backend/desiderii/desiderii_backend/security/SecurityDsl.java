@@ -8,6 +8,12 @@ public class SecurityDsl extends AbstractHttpConfigurer<SecurityDsl, HttpSecurit
     private boolean flag;
 
     @Override
+    public void init(HttpSecurity http) throws Exception {
+        // Disable CORS
+        http.csrf().disable();
+    }
+
+    @Override
     public void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class);
     }

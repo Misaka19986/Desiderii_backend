@@ -3,6 +3,7 @@ package backend.desiderii.desiderii_backend.controller;
 import backend.desiderii.desiderii_backend.config.Response;
 import backend.desiderii.desiderii_backend.entity.User;
 import backend.desiderii.desiderii_backend.service.UserService;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Resource
     private UserService userService;
     @PostMapping("/login")
     public Response<Map> postUserLogin(@RequestBody User user){
@@ -36,16 +38,26 @@ public class UserController {
                 Map<String, String> map = new HashMap<>();
                 map.put("accessToken", tokens[0]);
                 map.put("refreshToken", tokens[1]);
-                return Response.success(200, "Login success", map);
+                return Response.success(100, "Login success", map);
             }
         }catch (Exception e){
             logger.warn("登录失败！");
-            return Response.error(400, "Login failed", null);
+            return Response.error(101, "Login failed", null);
         }
     }
 
     @PostMapping("/register")
-    public void postUserRegister(@RequestBody User user){
-
+    public Response<String> postUserRegister(@RequestBody User user){
+        try{
+            if(!userService.userRegister(user)){
+                throw new Exception();
+            }else{
+                logger.info("注册成功！");
+                return Response.success(200, "Register success", null);
+            }
+        }catch (Exception e){
+            logger.warn("注册失败！");
+            return Response.error(201, "Register failed", null);
+        }
     }
 }
