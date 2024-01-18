@@ -34,15 +34,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // Get user from database
         User userDB = userMapper.selectOne(new QueryWrapper<User>().eq("alias", alias));
-
         // Username is not founded or password mismatch
-        if(null == userDB ||
-                EncryptPasswordUtils.matchesPassword(password, userDB.getPassword())){
+        if(null == userDB){
+            logger.warn("未找到相应用户");
+            return null;
+        }else if(!EncryptPasswordUtils.matchesPassword(password, userDB.getPassword())){
+            logger.warn("密码不匹配");
             return null;
         }
 
         // Gen tokens
-        String[] tokens = null;
+        String[] tokens = new String[2];
         tokens[0] = JWTUtils.createAccessToken(userDB.getUid());
         tokens[1] = JWTUtils.createRefreshToken(userDB.getUid());
 

@@ -2,7 +2,6 @@ package backend.desiderii.desiderii_backend.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,28 +15,18 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("chat_group_user")
-public class ChatGroupUser implements Serializable {
+@TableName("role_permission")
+public class RolePermission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 群聊id
+     * 角色id
      */
-    private Long gid;
+    private Long rid;
 
     /**
-     * 成员id
+     * 权限id
      */
-    private Long uid;
-
-    /**
-     * 加入时间
-     */
-    private LocalDateTime joinTime;
-
-    /**
-     * 成员权限 0-普通成员 1-管理员 2-群主
-     */
-    private Byte role;
+    private Long pid;
 }

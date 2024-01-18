@@ -3,7 +3,6 @@ package backend.desiderii.desiderii_backend.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
@@ -19,24 +18,19 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("tag")
-public class Tag implements Serializable {
+@TableName("permission")
+public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 标签id
+     * 权限id
      */
-    @TableId(value = "tid", type = IdType.AUTO)
-    private Long tid;
+    @TableId(value = "pid", type = IdType.AUTO)
+    private Long pid;
 
     /**
-     * 内容
+     * 权限
      */
-    private String content;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
+    private String perm;
 }

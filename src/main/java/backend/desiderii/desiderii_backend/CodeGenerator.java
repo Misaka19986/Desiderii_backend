@@ -26,7 +26,8 @@ public class CodeGenerator {
                 .strategyConfig(builder -> {
                     builder.addInclude("user", "topic", "tag", "post_tag",
                                     "post", "message", "comment",
-                                    "chat_group_user", "chat_group") // 设置需要生成的表名
+                                    "chat_group_user", "chat_group", "role",
+                                    "permission", "role_permission", "user_role") // 设置需要生成的表名
                             // Entity 策略配置
                             .entityBuilder()
                             .enableLombok() //开启 Lombok

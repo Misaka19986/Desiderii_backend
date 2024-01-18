@@ -1,6 +1,6 @@
 package backend.desiderii.desiderii_backend.mapper;
 
-import backend.desiderii.desiderii_backend.entity.Post;
+import backend.desiderii.desiderii_backend.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Misakaless19986
  * @since 2024-01-19 12:29:48
  */
-public interface PostMapper extends BaseMapper<Post> {
+public interface RoleMapper extends BaseMapper<Role> {
 
 }

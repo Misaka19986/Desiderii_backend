@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Misakaless19986
- * @since 2024-01-17 11:21:25
+ * @since 2024-01-19 12:29:47
  */
 public interface ChatGroupMapper extends BaseMapper<ChatGroup> {
 
