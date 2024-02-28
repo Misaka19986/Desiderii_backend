@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.rmi.server.ExportException;
 
 public class JWTFilter extends OncePerRequestFilter {
 
@@ -26,13 +27,14 @@ public class JWTFilter extends OncePerRequestFilter {
             Long uid;
 
             // Tokens' payload get different uid or not exist
-            if((decodedAccessToken.getClaim("uid")
-                    != decodedRefreshToken.getClaim("uid"))
-            || null == decodedAccessToken.getClaim("uid")
-            || null == decodedRefreshToken.getClaim("uid")){
+            if(decodedAccessToken.getClaim("uid").asInt()
+                    != decodedRefreshToken.getClaim("uid").asInt()) {
                 logger.warn("Wrong payload");
                 throw new Exception();
-
+            }else if(null == decodedAccessToken.getClaim("uid")
+                    || null == decodedRefreshToken.getClaim("uid")) {
+                logger.warn("Null payload");
+                throw new Exception();
             }else{
                 uid = decodedRefreshToken.getClaim("uid").asLong();
             }

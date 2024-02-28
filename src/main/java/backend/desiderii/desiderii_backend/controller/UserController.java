@@ -35,6 +35,7 @@ public class UserController {
             if(null == tokens){
                 throw new Exception();
             }else{
+                logger.info("登录成功！");
                 Map<String, String> map = new HashMap<>();
                 map.put("accessToken", tokens[0]);
                 map.put("refreshToken", tokens[1]);
@@ -58,6 +59,24 @@ public class UserController {
         }catch (Exception e){
             logger.warn("注册失败！");
             return Response.error(201, "Register failed", null);
+        }
+    }
+
+    @PostMapping("/getUserInfo")
+    public Response<User> getUserInfo(@RequestBody String name){
+        try{
+            logger.info("给定名字: {}", name);
+            User userDB = userService.getUserByName(name);
+            if(null == userDB){
+                throw new Exception();
+            }else{
+                logger.info("查询成功！");
+                userDB.setPassword("");
+                return Response.success(100, "Get user info success", userDB);
+            }
+        }catch (Exception e){
+            logger.warn("查询失败");
+            return Response.error(101, "Get user info failed", null);
         }
     }
 }

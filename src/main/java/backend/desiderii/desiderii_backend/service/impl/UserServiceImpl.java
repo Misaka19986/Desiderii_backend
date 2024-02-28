@@ -28,7 +28,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String[] userLogin(User user) {
-        logger.info("登录中");
         String alias = user.getAlias();
         String password = user.getPassword();
 
@@ -73,5 +72,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.insert(newUser);
 
         return true;
+    }
+
+    @Override
+    public User getUserByName(String name){
+        User userDB = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("alias", name));
+
+        if(null == userDB){
+            logger.warn("没有该用户！");
+            return null;
+        }
+
+        return userDB;
     }
 }
