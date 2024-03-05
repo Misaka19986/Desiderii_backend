@@ -29,6 +29,6 @@ urlpatterns = [
     path('user/', include([
         path('login', UserView.userLogin),
         path('register', UserView.userRegister),
-        path('logout', UserView.UserAPI.userLogout)
+        path('logout', UserView.UserLogout.as_view())
     ])),
 ]

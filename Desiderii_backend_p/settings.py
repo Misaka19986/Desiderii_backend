@@ -60,6 +60,34 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Desiderii_backend_p.urls'
 
+# 将session属性设置为 secure
+SESSION_COOKIE_SECURE = True
+
+# 设置set_cookie的samesite属性
+SESSION_COOKIE_SAMESITE = 'None'
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -137,10 +165,6 @@ FILE_UPLOAD_TEMP_DIR = 'files/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_HEADERS = ('*')
-
 AUTH_USER_MODEL = 'desiderii.User'
 
 REST_FRAMEWORK = {
@@ -154,7 +178,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=1),   # 访问令牌的有效时间
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=2),   # 访问令牌的有效时间
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(hours=12), # 刷新令牌的有效时间
 }
 
@@ -187,3 +211,6 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
+
+# superuser: desiderii
+# password: $2a$12$z9Y1JX3e5K7Qb8yG6U5R4u
