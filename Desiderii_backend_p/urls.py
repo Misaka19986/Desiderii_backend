@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from desiderii.views import UserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from django.conf.urls import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +31,9 @@ urlpatterns = [
     path('user/', include([
         path('login', UserView.userLogin),
         path('register', UserView.userRegister),
-        path('logout', UserView.UserLogout.as_view())
+        path('logout', UserView.UserLogout.as_view()),
+        path('getUserInfoBySession', UserView.GetUserInfoBySession.as_view()),
+        path('updateUserInfoBySession', UserView.UpdateUserInfoBySession.as_view()),
+        path('uploadUserAvatar', UserView.UploadUserAvatar.as_view()),
     ])),
 ]
