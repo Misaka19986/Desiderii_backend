@@ -163,6 +163,15 @@ class UpdateUserInfoBySession(APIView):
             logger.info('Email has been registered')
             return JsonResponse({'code': 103, 'message': 'Email has been registered'})
 
+        if len(phone) == 0:
+            phone = user.phone
+
+        if len(email) == 0:
+            email = user.email
+
+        if len(signature) == 0:
+            signature = user.signature
+
         User.objects.filter(id=user.id).update(name=username, phone=phone, email=email, signature=signature)
 
         logger.info('Success')
@@ -175,6 +184,21 @@ class UploadUserAvatar(APIView):
             logger.info('Cant find user')
             return JsonResponse({'code': 101, 'message': 'Cant find user'})
 
+        # 上传的图片名称
+        keys = request.FILES.keys()
+        if len(keys) > 1:
+            logger.info('Too many files')
+            return JsonResponse({'code': 101, 'message': 'Too many files'})
 
+        avatar_name = list(keys)[0]
+        avatar = request.FILES.get(key=avatar_name)
+
+        user.avatar.delete()
+
+        user.avatar = avatar
+        user.save()
+
+        # 返回路径
+        path = '/media/' + str(user.avatar)
 
         return JsonResponse({'code': 100, 'message': 'Upload success'})

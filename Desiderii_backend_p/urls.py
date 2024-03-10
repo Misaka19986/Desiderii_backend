@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from desiderii.views import UserView
+from desiderii.views import UserView, ArticleView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from django.conf.urls import static
+from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
@@ -36,4 +36,10 @@ urlpatterns = [
         path('updateUserInfoBySession', UserView.UpdateUserInfoBySession.as_view()),
         path('uploadUserAvatar', UserView.UploadUserAvatar.as_view()),
     ])),
+    path('article/', include([
+        path('getAllArticlePreviews', ArticleView.getAllArticlePreviews),
+        path('<str:title>', ArticleView.GetArticleByName.as_view()),
+    ])),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

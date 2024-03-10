@@ -220,5 +220,5 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
 
-# superuser: desiderii
-# password: $2a$12$z9Y1JX3e5K7Qb8yG6U5R4u
+# superuser: Ririka
+# password: fc245260
