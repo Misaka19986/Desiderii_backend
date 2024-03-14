@@ -20,8 +20,10 @@ from desiderii.views import UserView, ArticleView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
     path('token/', include([
         path('obtain', TokenObtainPairView.as_view()),
@@ -38,7 +40,9 @@ urlpatterns = [
     ])),
     path('article/', include([
         path('getAllArticlePreviews', ArticleView.getAllArticlePreviews),
-        path('<str:title>', ArticleView.GetArticleByName.as_view()),
+        path('preview/<str:title>', ArticleView.GetArticleByTitle.as_view()),
+        path('getUserArticlePreviews', ArticleView.GetUserArticlePreviews.as_view()),
+
     ])),
 ]
 
