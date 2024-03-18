@@ -21,29 +21,29 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic.base import TemplateView
+from django.views.static import serve
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
-    path('token/', include([
-        path('obtain', TokenObtainPairView.as_view()),
-        path('refresh', TokenRefreshView.as_view()),
-        path('verify', TokenVerifyView.as_view())
-    ])),
-    path('user/', include([
-        path('login', UserView.userLogin),
-        path('register', UserView.userRegister),
-        path('logout', UserView.UserLogout.as_view()),
-        path('getUserInfoBySession', UserView.GetUserInfoBySession.as_view()),
-        path('updateUserInfoBySession', UserView.UpdateUserInfoBySession.as_view()),
-        path('uploadUserAvatar', UserView.UploadUserAvatar.as_view()),
-    ])),
-    path('article/', include([
-        path('getAllArticlePreviews', ArticleView.getAllArticlePreviews),
-        path('preview/<str:title>', ArticleView.GetArticleByTitle.as_view()),
-        path('getUserArticlePreviews', ArticleView.GetUserArticlePreviews.as_view()),
+    path('api/', include([
+        path('token/', include([
+            path('obtain', TokenObtainPairView.as_view()),
+            path('refresh', TokenRefreshView.as_view()),
+            path('verify', TokenVerifyView.as_view())
+        ])),
+        path('user/', include([
+            path('login', UserView.userLogin),
+            path('register', UserView.userRegister),
+            path('logout', UserView.UserLogout.as_view()),
+            path('getUserInfoBySession', UserView.GetUserInfoBySession.as_view()),
+            path('updateUserInfoBySession', UserView.UpdateUserInfoBySession.as_view()),
+            path('uploadUserAvatar', UserView.UploadUserAvatar.as_view()),
+        ])),
+        path('article/', include([
+            path('getAllArticlePreviews', ArticleView.getAllArticlePreviews),
+            path('preview/<str:title>', ArticleView.GetArticleByTitle.as_view()),
+            path('getUserArticlePreviews', ArticleView.GetUserArticlePreviews.as_view()),
 
+        ])),
     ])),
-]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
